@@ -1,6 +1,6 @@
 # overlayify
 
-A program to quickly make an image compatible with https://github.com/r-PlaceTux/Overlay
+A program to quickly make an image compatible with https://github.com/alifurkany/place-overlay
 
 # Installation
 
@@ -13,5 +13,5 @@ npm install
 # Usage
     
 ```bash
-node . <image> <x> <y>
+node . <image1 x y> [image2 x y] [image3 x y] ... # composite images and make a canvas
 ```
