@@ -22,6 +22,7 @@ function difference(c1, c2) {
 }
 
 function overlayify(images) {
+	console.log('Building overlay....')
 	return new Promise(async (resolve, reject) => {
 		// create 2000x2000 canvas
 		let canvas = new Jimp(2000, 2000, 0x00000000);
@@ -32,22 +33,24 @@ function overlayify(images) {
 		// for every pixel
 		for (let px = 0; px < canvas.bitmap.width; px++) {
 			for (let py = 0; py < canvas.bitmap.height; py++) {
+
 				let col = canvas.getPixelColor(px, py);
 				if (py % 3 !== 1 || px % 3 !== 1) {
-					console.log({x: px, y: py, color: col})
 					canvas.setPixelColor(col - (col % 0x100), px, py);
 				} else if (col !== 0x00000000) {
 					// replace with closest color in the palette
 					// check red green blue values
 					canvas.setPixelColor(
-						palette.sort(
-							(a, b) =>
-								difference(rgba(col), rgba(a)) - difference(rgba(col), rgba(b))
-						)[0],
+						palette.sort( (a, b) => difference( rgba(col), rgba(a) ) - difference( rgba(col), rgba(b) ) )[0],
 						px,
 						py
 					);
 				}
+				// if(col != 0) {
+				// 	console.log({x: px, y: py, color: col})
+
+				// }
+
 			}
 		}
 		resolve(canvas);
@@ -56,19 +59,20 @@ function overlayify(images) {
 
 if (program_mode) {
 	let args = process.argv.slice(2);
-	console.log({args})
 	// split images in order image_path, x, y
 	let images = [];
 	if(args.length == 0) {
 		const schema = require('./overlay.schema')
-		schema.map(e => args.push(e.path, e.x, e.y))
+		schema.map(e => images.push({image_path: e.path, x: e.x, y: e.y}))
+	} else {
+		for (let i = 0; i < args.length; i += 3) {
+			images.push({
+				image_path: args[i],
+				x: parseInt(args[i + 1]),
+				y: parseInt(args[i + 2])
+			});
+		}
 	}
-	for (let i = 0; i < args.length; i += 3) {
-		images.push({
-			image_path: args[i],
-			x: parseInt(args[i + 1]),
-			y: parseInt(args[i + 2])
-		});
-	}
+
 	overlayify(images).then((ov) => ov.write("overlay.png"));
 }
