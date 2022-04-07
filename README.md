@@ -1,4 +1,6 @@
 # overlayify
+Modified by La team de L'ombre
+Original: https://gitlab.com/alifurkany/overlayify
 
 A program to quickly make an image compatible with https://github.com/alifurkany/place-overlay
 

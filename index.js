@@ -34,6 +34,7 @@ function overlayify(images) {
 			for (let py = 0; py < canvas.bitmap.height; py++) {
 				let col = canvas.getPixelColor(px, py);
 				if (py % 3 !== 1 || px % 3 !== 1) {
+					console.log({x: px, y: py, color: col})
 					canvas.setPixelColor(col - (col % 0x100), px, py);
 				} else if (col !== 0x00000000) {
 					// replace with closest color in the palette
@@ -55,8 +56,13 @@ function overlayify(images) {
 
 if (program_mode) {
 	let args = process.argv.slice(2);
+	console.log({args})
 	// split images in order image_path, x, y
 	let images = [];
+	if(args.length == 0) {
+		const schema = require('./overlay.schema')
+		schema.map(e => args.push(e.path, e.x, e.y))
+	}
 	for (let i = 0; i < args.length; i += 3) {
 		images.push({
 			image_path: args[i],
