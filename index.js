@@ -1,7 +1,7 @@
 const Jimp = require("jimp");
 const program_mode = true;
 
-const GRID_SIZE = 2000
+const GRID_SIZE = 500
 const PALETTE = [
 	7143450, 12451897, 16729344, 16754688, 16766517, 16775352, 41832, 52344,
 	8318294, 30063, 40618, 52416, 2379940, 3576042, 5368308, 4799169, 6970623,
@@ -30,7 +30,7 @@ function overlayify(images) {
 		for (let img of images) {
 			canvas.composite(await Jimp.read(img.image_path), img.x, img.y);
 		}
-		canvas.resize(6000, 6000, Jimp.RESIZE_NEAREST_NEIGHBOR);
+		canvas.resize(GRID_SIZE*3, GRID_SIZE*3, Jimp.RESIZE_NEAREST_NEIGHBOR);
 		// for every pixel
 		for (let px = 0; px < canvas.bitmap.width; px++) {
 			for (let py = 0; py < canvas.bitmap.height; py++) {

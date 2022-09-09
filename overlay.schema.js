@@ -16,7 +16,7 @@ module.exports = [
     },
     {
         path: './templates/build_kcorp.png',
-        x: 1000,
-        y: 1000
+        x: 100,
+        y: 100
     },
 ]
