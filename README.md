@@ -11,7 +11,8 @@ npm i
 ```
 
 # Usage
-    
+Add template in `/templates` then insert them at coords in `overlay.schema.js`
+
 ```bash
-node . <image1 x y> [image2 x y] [image3 x y] ... # composite images and make a canvas
+npm run build
 ```
