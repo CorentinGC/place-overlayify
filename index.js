@@ -1,7 +1,8 @@
 const Jimp = require("jimp");
 const program_mode = true;
 
-const palette = [
+const GRID_SIZE = 2000
+const PALETTE = [
 	7143450, 12451897, 16729344, 16754688, 16766517, 16775352, 41832, 52344,
 	8318294, 30063, 40618, 52416, 2379940, 3576042, 5368308, 4799169, 6970623,
 	9745407, 8461983, 11815616, 14986239, 14553215, 16726145, 16751018, 7161903,
@@ -25,7 +26,7 @@ function overlayify(images) {
 	console.log('Building overlay....')
 	return new Promise(async (resolve, reject) => {
 		// create 2000x2000 canvas
-		let canvas = new Jimp(2000, 2000, 0x00000000);
+		let canvas = new Jimp(GRID_SIZE, GRID_SIZE, 0x00000000);
 		for (let img of images) {
 			canvas.composite(await Jimp.read(img.image_path), img.x, img.y);
 		}
@@ -38,10 +39,10 @@ function overlayify(images) {
 				if (py % 3 !== 1 || px % 3 !== 1) {
 					canvas.setPixelColor(col - (col % 0x100), px, py);
 				} else if (col !== 0x00000000) {
-					// replace with closest color in the palette
+					// replace with closest color in the PALETTE
 					// check red green blue values
 					canvas.setPixelColor(
-						palette.sort( (a, b) => difference( rgba(col), rgba(a) ) - difference( rgba(col), rgba(b) ) )[0],
+						PALETTE.sort( (a, b) => difference( rgba(col), rgba(a) ) - difference( rgba(col), rgba(b) ) )[0],
 						px,
 						py
 					);
