@@ -7,9 +7,7 @@ A program to quickly make an image compatible with https://github.com/alifurkany
 # Installation
 
 ```bash
-git clone https://gitlab.com/alifurkany/overlayify
-cd overlayify
-npm install
+npm i
 ```
 
 # Usage
